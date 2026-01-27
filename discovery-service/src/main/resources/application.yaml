@@ -1,0 +1,104 @@
+server:
+  port: ${DISCOVERY_SERVICE_PORT:8761}
+  shutdown: graceful
+
+spring:
+  application:
+    name: discovery-service
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+  
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:false}
+
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+info:
+  app:
+    name: Eureka Discovery Service
+    version: 1.0.0
+    description: Service Discovery avec Eureka
+    environment: dev
+
+logging:
+  level:
+    root: INFO
+    com.netflix.eureka: WARN
+    com.microservices: DEBUG
+  file:
+    name: logs/discovery-service.log
+    max-size: 10MB
+    max-history: 30
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+server:
+  shutdown: graceful
+  ssl:
+    enabled: ${SERVER_SSL_ENABLED:false}
+    key-store: ${SERVER_SSL_KEY_STORE:/etc/secrets/keystore.p12}
+    key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD:changeme}
+    key-store-type: ${SERVER_SSL_KEY_STORE_TYPE:PKCS12}
+    key-alias: ${SERVER_SSL_KEY_ALIAS:tomcat}
+
+eureka:
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 60000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    root: WARN
+    com.microservices: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    root: INFO
+    com.microservices: DEBUG

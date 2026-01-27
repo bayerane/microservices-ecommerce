@@ -1,0 +1,212 @@
+server:
+  port: ${USER_SERVICE_PORT:8082}
+  shutdown: graceful
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+
+spring:
+  application:
+    name: user-service
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB_USER:user_db}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:Brane1212}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE:20}
+      minimum-idle: ${SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE:5}
+      connection-timeout: ${SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT:30000}
+      idle-timeout: ${SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT:600000}
+      max-lifetime: ${SPRING_DATASOURCE_HIKARI_MAX_LIFETIME:1800000}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: ${JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:false}
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:http://auth-service}
+          jwk-set-uri: ${JWT_JWK_SET_URI:http://auth-service/oauth2/authorize}
+
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+eureka:
+  client:
+    enabled: ${EUREKA_CLIENT_ENABLED:false}
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+    register-with-eureka: ${EUREKA_CLIENT_REGISTER_WITH_EUREKA:true}
+    fetch-registry: ${EUREKA_CLIENT_FETCH_REGISTRY:true}
+  
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:false}
+    instance-id: ${spring.application.name}:${server.port}
+
+feign:
+  circuitbreaker:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: ${FEIGN_CONNECT_TIMEOUT:5000}
+        readTimeout: ${FEIGN_READ_TIMEOUT:10000}
+        writeTimeout: ${FEIGN_WRITE_TIMEOUT:10000}
+        loggerLevel: BASIC
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      auth-service:
+        sliding-window-size: ${RESILIENCE4J_MINIMUM_NUMBER_OF_CALLS:10}
+        failure-rate-threshold: ${RESILIENCE4J_FAILURE_RATE_THRESHOLD:50}
+        slow-call-rate-threshold: ${RESILIENCE4J_SLOW_CALL_RATE_THRESHOLD:100}
+        slow-call-duration-threshold: ${RESILIENCE4J_SLOW_CALL_DURATION_THRESHOLD:2000}
+        wait-duration-in-open-state: ${RESILIENCE4J_WAIT_DURATION_IN_OPEN_STATE:60000}
+  retry:
+    instances:
+      auth-service:
+        max-attempts: 3
+        wait-duration: 1000
+  ratelimiter:
+    instances:
+      auth-service:
+        register-health-indicator: true
+        limit-refresh-period: 1m
+        limit-for-period: 100
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: ${SWAGGER_UI_ENABLED:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,circuitbreakers
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+info:
+  app:
+    name: User Service
+    version: 1.0.0
+    description: Service de gestion des utilisateurs
+    environment: dev
+
+logging:
+  level:
+    root: INFO
+    com.microservices.user: DEBUG
+    org.springframework.security: DEBUG
+    rg.springframework.web: DEBUG
+  file:
+    name: logs/user-service.log
+    max-size: 10MB
+    max-history: 30
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    hikari:
+      maximum-pool-size: ${SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE:30}
+      minimum-idle: ${SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE:10}
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+
+server:
+  ssl:
+    enabled: ${SERVER_SSL_ENABLED:false}
+    key-store: ${SERVER_SSL_KEY_STORE:/etc/secrets/keystore.p12}
+    key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD:changeme}
+    key-store-type: ${SERVER_SSL_KEY_STORE_TYPE:PKCS12}
+    key-alias: ${SERVER_SSL_KEY_ALIAS:tomcat}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      auth-service:
+        failure-rate-threshold: ${RESILIENCE4J_FAILURE_RATE_THRESHOLD:50}
+        wait-duration-in-open-state: ${RESILIENCE4J_WAIT_DURATION_IN_OPEN_STATE:120000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+
+logging:
+  level:
+    root: WARN
+    com.microservices.user: INFO
+    org.springframework.security: WARN
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    url: jdbc:h2:mem:userdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+
+eureka:
+  client:
+    enabled: false
+
+feign:
+  circuitbreaker:
+    enabled: false
+
+logging:
+  level:
+    root: INFO
+    com.microservices.user: DEBUG

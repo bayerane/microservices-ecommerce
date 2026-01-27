@@ -1,0 +1,151 @@
+**/HELP.md
+**/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+### VS Code ###
+.vscode/
+
+# =====================================================
+# Configuration Fichiers (Environment Variables)
+# =====================================================
+# Ignorer tous les fichiers .env sauf .env.example
+.env
+.env.local
+.env.*.local
+!.env.example
+.env.prod
+
+# =====================================================
+# Fichiers de Log
+# =====================================================
+*.log
+*.log.*
+logs/
+log/
+
+# =====================================================
+# Fichiers de Secrets et Credentials
+# =====================================================
+*.jks
+*.p12
+/etc/secrets/
+*.key
+*.pem
+*.cert
+*.crt
+secret.properties
+secrets.properties
+.env.production
+.aws/
+.ssh/
+
+# =====================================================
+# Fichiers Temporaires et Cache
+# =====================================================
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+.gradle/
+
+# =====================================================
+# IDEs et Éditeurs
+# =====================================================
+.sublime-project
+.sublime-workspace
+*.code-workspace
+.vscode/settings.json
+.vscode/launch.json
+*.sublime-settings
+
+# =====================================================
+# Dépendances et Packages
+# =====================================================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# =====================================================
+# Docker et Containers
+# =====================================================
+.docker/
+docker-compose.override.yml
+
+# =====================================================
+# Test Reports et Coverage
+# =====================================================
+**/surefire-reports/
+**/failsafe-reports/
+coverage/
+.jacoco/
+*.lcov
+
+# =====================================================
+# Build Artifacts
+# =====================================================
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+out/
+
+# =====================================================
+# Base de Données
+# =====================================================
+*.db
+*.sqlite
+*.sqlite3
+data/
+db/
+
+# =====================================================
+# Configuration Locale (à ignorer)
+# =====================================================
+application-local.yaml
+application-dev.yaml
+application-prod.yaml
+application-test.yaml
+local.properties
+build.properties
+
+# =====================================================
+# IDE Generated Files
+# =====================================================
+.classpath.in
+.factorypath.xml
+.sts4-cache/
+.project.in
+.settings.in
+
+# Test
+*.h2.db

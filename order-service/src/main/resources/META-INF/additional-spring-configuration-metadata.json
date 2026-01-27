@@ -1,0 +1,52 @@
+{"properties": [
+  {
+    "name": "spring.h2.console.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.h2.console.enabled'"
+  },
+  {
+    "name": "spring.h2.console.path",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.h2.console.path'"
+  },
+  {
+    "name": "spring.security.oauth2.resourceserver.jwt.issuer-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.oauth2.resourceserver.jwt.issuer-uri'"
+  },
+  {
+    "name": "spring.security.oauth2.resourceserver.jwt.jwk-set-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.oauth2.resourceserver.jwt.jwk-set-uri'"
+  },
+  {
+    "name": "feign.client.config.default.connect-timeout",
+    "type": "java.lang.String",
+    "description": "A description for 'feign.client.config.default.connect-timeout'"
+  },
+  {
+    "name": "feign.client.config.default.readTimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'feign.client.config.default.readTimeout'"
+  },
+  {
+    "name": "feign.client.config.default.loggerLevel",
+    "type": "java.lang.String",
+    "description": "A description for 'feign.client.config.default.loggerLevel'"
+  },
+  {
+    "name": "feign.client.config.user-service.url",
+    "type": "java.lang.String",
+    "description": "A description for 'feign.client.config.user-service.url'"
+  },
+  {
+    "name": "feign.circuitbreaker.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'feign.circuitbreaker.enabled'"
+  },
+  {
+    "name": "feign.client.config.default.writeTimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'feign.client.config.default.writeTimeout'"
+  }
+]}

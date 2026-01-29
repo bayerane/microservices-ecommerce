@@ -198,18 +198,37 @@ microservices-backend/
 │
 ├── 📦 common-lib/                    # Bibliothèque partagée
 │   ├── pom.xml
-│   └── src/main/java/com/microservices/common/
-│       ├── dto/
-│       │   ├── ApiResponse.java
-│       │   └── ErrorResponse.java
-│       ├── exception/
-│       │   ├── BusinessException.java
-│       │   └── ResourceNotFoundException.java
-│       ├── enums/
-│       │   ├── Role.java
-│       │   └── OrderStatus.java
-│       └── util/
-│           └── DateUtil.java
+│   └── src/
+|       ├── main/
+|       |   └── java/com/microservices/common/
+│       |       ├── dto/
+│       |       │   ├── ApiResponse.java
+│       |       │   ├── ErrorResponse.java
+│       |       │   ├── PageResponse.java
+│       |       │   └── ValidationErrorResponse.jav
+│       |       ├── exception/
+│       |       │   ├── BusinessException.java
+│       |       │   ├── ResourceNotFoundException.java
+│       |       │   ├── UnauthorizedException.java
+│       |       │   ├── ForbiddenException.java
+│       |       │   ├── BadRequestException.java
+│       |       │   └── InternalServerException.java
+│       |       ├── enums/
+│       |       │   ├── Role.java
+│       |       │   ├── OrderStatus.java
+│       |       │   └── ErrorCode.java
+│       |       ├── util/
+│       |       │   ├── DateUtil.java
+│       |       │   ├── ValidationUtil.java
+│       |       │   └── StringUtil.java
+│       |       └── constant/
+│       |           ├── AppConstants.java
+│       |           └── SecurityConstants.java
+|       └── test/
+|           └── java/com/microservices/common/
+|               └── util/
+|                   ├── DateUtilTest.java
+|                   └── ValidationUtilTest.java
 │
 ├── 🔍 discovery-service/             # Service Discovery (Eureka)
 │   ├── pom.xml

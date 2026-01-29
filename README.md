@@ -197,6 +197,7 @@ microservices-backend/
 ├── 📜 .gitignore
 │
 ├── 📦 common-lib/                    # Bibliothèque partagée
+│   ├── README.md
 │   ├── pom.xml
 │   └── src/
 |       ├── main/
@@ -231,14 +232,29 @@ microservices-backend/
 |                   └── ValidationUtilTest.java
 │
 ├── 🔍 discovery-service/             # Service Discovery (Eureka)
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── README.md
+│   ├── DEPLOYMENT.md
+│   ├── start.sh
+│   ├── stop.sh
 │   ├── pom.xml
 │   └── src/
 │       ├── main/
 │       │   ├── java/com/microservices/discovery/
-│       │   │   └── DiscoveryServiceApplication.java
+│       │   │   ├── DiscoveryServiceApplication.java
+│       │   │   └── config
+│       │   │       └── SecurityConfig.java
 │       │   └── resources/
-│       │       └── application.yml
+│       │       ├── application.yaml
+│       │       ├── application-dev.yaml
+│       │       ├── application-prod.yaml
+│       │       └── banner.txt
 │       └── test/
+|           ├── java/com/microservices/discovery/
+|           |   └── DiscoveryServiceApplicationTests.java
+|           └── resources/
+|               └── application-test.yaml
 │
 ├── 🌐 api-gateway/                   # API Gateway
 │   ├── pom.xml

@@ -27,7 +27,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,env
       base-path: /actuator
   endpoint:
     health:
@@ -78,7 +78,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,metrics,prometheus
+        include: health,metrics,prometheus,info
   endpoint:
     health:
       show-details: when-authorized

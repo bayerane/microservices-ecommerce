@@ -29,7 +29,7 @@ public final class ValidationUtil {
     private static final Pattern UPPERCASE_PATTERN = Pattern.compile("[A-Z]");
     private static final Pattern LOWERCASE_PATTERN = Pattern.compile("[a-z]");
     private static final Pattern DIGIT_PATTERN = Pattern.compile("\\d");
-    private static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile("[!@#$%^&*()_+=|<>?{}\\[\\]~-]");
+    private static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile("[!@#$%^&*()_+=\\[\\]{};':\"\\\\|,.<>/?-]");
 
     private ValidationUtil() {
         throw new UnsupportedOperationException("Classe utilitaire, ne peut pas être instanciée.");
@@ -42,7 +42,7 @@ public final class ValidationUtil {
 
     // Valide un numéro de téléphone
     public static boolean isValidPhone(String phoneNumber) {
-        return phoneNumber != null && PHONE_PATTERN.matcher(phoneNumber.replace("\\s", "")).matches();
+        return phoneNumber != null && PHONE_PATTERN.matcher(phoneNumber.replaceAll("\\s+", "")).matches();
     }
 
     // Valide un UUID

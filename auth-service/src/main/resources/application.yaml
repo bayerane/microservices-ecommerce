@@ -37,6 +37,12 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 30s
 
+  # Configuration SQL init
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+
 eureka:
   client:
     enabled: ${EUREKA_CLIENT_ENABLED:false}
@@ -58,19 +64,31 @@ jwt:
 springdoc:
   api-docs:
     path: /api-docs
+    enabled: true
   swagger-ui:
     path: /swagger-ui.html
     enabled: ${SWAGGER_UI_ENABLED:true}
+    tags-sorter: alpha
+    operations-sorter: method
+  show-actuator: true
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus
+        include: health,info,metrics,prometheus,env,loggers,mappings
       base-path: /actuator
   endpoint:
     health:
       show-details: when-authorized
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: true
+  info:
+    env:
+      enabled: true
   prometheus:
     metrics:
       export:
@@ -82,6 +100,12 @@ info:
     version: 1.0.0
     description: Service d'authentification JWT
     environment: dev
+  service:
+    port: 8081
+    swagger: http://localhost:8081/swagger-ui.html
+  database:
+    name: auth_db
+    type: PostgreSQL
 
 logging:
   level:
@@ -151,7 +175,7 @@ spring:
     url: jdbc:h2:mem:authdb
     driver-class-name: org.h2.Driver
     username: sa
-    password: sa
+    password:
 
   jpa:
     show-sql: true

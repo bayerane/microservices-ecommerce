@@ -200,31 +200,31 @@ microservices-backend/
 │   ├── README.md
 │   ├── pom.xml
 │   └── src/
-|       ├── main/
-|       |   └── java/com/microservices/common/
-│       |       ├── dto/
-│       |       │   ├── ApiResponse.java
-│       |       │   ├── ErrorResponse.java
-│       |       │   ├── PageResponse.java
-│       |       │   └── ValidationErrorResponse.jav
-│       |       ├── exception/
-│       |       │   ├── BusinessException.java
-│       |       │   ├── ResourceNotFoundException.java
-│       |       │   ├── UnauthorizedException.java
-│       |       │   ├── ForbiddenException.java
-│       |       │   ├── BadRequestException.java
-│       |       │   └── InternalServerException.java
-│       |       ├── enums/
-│       |       │   ├── Role.java
-│       |       │   ├── OrderStatus.java
-│       |       │   └── ErrorCode.java
-│       |       ├── util/
-│       |       │   ├── DateUtil.java
-│       |       │   ├── ValidationUtil.java
-│       |       │   └── StringUtil.java
-│       |       └── constant/
-│       |           ├── AppConstants.java
-│       |           └── SecurityConstants.java
+│       ├── main/
+│       │   └── java/com/microservices/common/
+│       │       ├── dto/
+│       │       │   ├── ApiResponse.java
+│       │       │   ├── ErrorResponse.java
+│       │       │   ├── PageResponse.java
+│       │       │   └── ValidationErrorResponse.jav
+│       │       ├── exception/
+│       │       │   ├── BusinessException.java
+│       │       │   ├── ResourceNotFoundException.java
+│       │       │   ├── UnauthorizedException.java
+│       │       │   ├── ForbiddenException.java
+│       │       │   ├── BadRequestException.java
+│       │       │   └── InternalServerException.java
+│       │       ├── enums/
+│       │       │   ├── Role.java
+│       │       │   ├── OrderStatus.java
+│       │       │   └── ErrorCode.java
+│       │       ├── util/
+│       │       │   ├── DateUtil.java
+│       │       │   ├── ValidationUtil.java
+│       │       │   └── StringUtil.java
+│       │       └── constant/
+│       │           ├── AppConstants.java
+│       │           └── SecurityConstants.java
 |       └── test/
 |           └── java/com/microservices/common/
 |               └── util/
@@ -251,10 +251,10 @@ microservices-backend/
 │       │       ├── application-prod.yaml
 │       │       └── banner.txt
 │       └── test/
-|           ├── java/com/microservices/discovery/
-|           |   └── DiscoveryServiceApplicationTests.java
-|           └── resources/
-|               └── application-test.yaml
+│           ├── java/com/microservices/discovery/
+│           │   └── DiscoveryServiceApplicationTests.java
+│           └── resources/
+│               └── application-test.yaml
 │
 ├── 🌐 api-gateway/                   # API Gateway
 │   ├── pom.xml
@@ -292,7 +292,8 @@ microservices-backend/
 │       │   │   ├── dto/
 │       │   │   │   ├── LoginRequest.java
 │       │   │   │   ├── LoginResponse.java
-│       │   │   │   └── RegisterRequest.java
+│       │   │   │   ├── RegisterRequest.java
+│       │   │   │   └── AuthResponse.java
 │       │   │   ├── security/
 │       │   │   │   ├── JwtUtil.java
 │       │   │   │   ├── SecurityConfig.java
@@ -303,8 +304,16 @@ microservices-backend/
 │       │   │       └── GlobalExceptionHandler.java
 │       │   └── resources/
 │       │       ├── application.yml
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
 │       │       └── data.sql
 │       └── test/
+│           └── java/com/microservices/discovery/
+│               └── AuthServiceApplicationTests.java
+│                   ├── controller/
+│                   │   └── AuthControllerTest.java
+│                   └── service/
+│                       └── AuthServiceTest.java
 │
 ├── 👤 user-service/                  # Service de gestion des utilisateurs
 │   ├── pom.xml

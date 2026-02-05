@@ -186,6 +186,40 @@ Le token contient les claims suivants :
 }
 ```
 
+## 🚀 Démarrage Rapide
+
+### Utilisation des scripts (Recommandé)
+
+Des scripts automatisés sont fournis pour faciliter la gestion locale :
+
+```bash
+# Rendre les scripts exécutables
+chmod +x *.sh
+
+# Démarrer le service
+./start.sh dev
+
+# Arrêter le service proprement
+./stop.sh
+
+```
+
+## 🐳 Docker & Déploiement
+
+Le service est prêt pour la conteneurisation avec une image optimisée.
+
+### Dockerfile (Build Multi-stage)
+
+Le Dockerfile utilise une étape de build Maven suivie d'une étape d'exécution JRE Alpine pour minimiser le poids de l'image (env. 150MB).
+
+### Docker Compose
+
+```bash
+# Lancer le service avec sa base de données et Eureka
+docker-compose up -d
+
+```
+
 ## 🧪 Tests
 
 ### Lancer les tests
@@ -334,8 +368,8 @@ Voir le fichier `docker-compose.yml` à la racine du projet.
 
 ## 👥 Auteurs
 
-Microservices Team
+Baye Rane
 
 ## 📄 Licence
 
-Copyright © 2024 - Tous droits réservés
+Copyright © 2025 - Tous droits réservés

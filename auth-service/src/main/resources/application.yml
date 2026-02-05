@@ -53,7 +53,7 @@ eureka:
   
   instance:
     hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
-    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:false}
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
     instance-id: ${spring.application.name}:${server.port}
 
 jwt:

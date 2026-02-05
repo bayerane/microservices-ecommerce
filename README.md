@@ -264,14 +264,23 @@ microservices-backend/
 │       │   │   ├── GatewayApplication.java
 │       │   │   ├── config/
 │       │   │   │   ├── SecurityConfig.java
-│       │   │   │   └── CorsConfig.java
+│       │   │   │   ├── CorsConfig.java
+│       │   │   │   └── RouteConfig.java
 │       │   │   ├── filter/
-│       │   │   │   └── JwtAuthenticationFilter.java
-│       │   │   └── util/
-│       │   │       └── JwtUtil.java
+│       │   │   │   ├── JwtAuthenticationFilter.java
+│       │   │   │   ├── LoggingFilter.java
+│       │   │   │   └── RateLimitFilter.java
+│       │   │   ├── util/
+│       │   │   │   └── JwtUtil.java
+│       │   │   └── exception/
+│       │   │       └── GlobalErrorAttributes.java
 │       │   └── resources/
 │       │       └── application.yml
 │       └── test/
+│           ├── java/com/microservices/gateway/
+│           │   └── GatewayApplicationTests.java
+│           └── filter/
+│               └── JwtAuthenticationFilterTest.java
 │
 ├── 🔐 auth-service/                  # Service d'authentification
 │   ├── pom.xml

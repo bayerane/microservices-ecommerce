@@ -17,12 +17,16 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: false
+          enabled: true
           lower-case-service-id: true
 
       httpclient:
         connect-timeout: ${FEIGN_CONNECT_TIMEOUT:5000}
         response-timeout: ${FEIGN_READ_TIMEOUT:10000}
+        pool:
+          type: ELASTIC
+          max-connections: 100
+          max-idle-time: 30s
 
       routes:
         - id: auth-service
@@ -38,6 +42,12 @@ spring:
             - Path=/api/users/**
           filters:
             - RewritePath=/api/users/(?<segment>.*), /${segment}
+            - name: JwtAuthenticationFilter
+              args:
+                enabled: true
+            # - name: RateLimitFilter
+            #   args:
+            #     routeId: user-service-rate-limit
 
         - id: order-service
           uri: lb://order-service
@@ -45,6 +55,12 @@ spring:
             - Path=/api/orders/**
           filters:
             - RewritePath=/api/orders/(?<segment>.*), /${segment}
+            - name: JwtAuthenticationFilter
+              args:
+                enabled: true
+            # - name: RateLimitFilter
+            #   args:
+            #     routeId: order-service-rate-limit
 
       globalcors:
         cors-configurations:
@@ -80,17 +96,27 @@ eureka:
     prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:false}
     instance-id: ${spring.application.name}:${server.port}
 
+jwt:
+  secret: ${JWT_SECRET:Ods+vUyBPd5pfgRC9ltie6JZPAhmwTj/8zp2/ti9/0c=}
+  expiration: ${JWT_EXPIRATION:86400000}
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus,gateway
+        include: health,info,metrics,prometheus,gateway,routes,env
       base-path: /actuator
   endpoint:
     health:
       show-details: when-authorized
+      defaults:
+        enabled: true
     gateway:
       enabled: true
+      info:
+        env:
+          enabled: true
   prometheus:
     metrics:
       export:
@@ -124,6 +150,8 @@ spring:
 
   cloud:
     gateway:
+      ratelimit:
+        enabled: true
       globalcors:
         cors-configurations:
           '[/**]':
@@ -132,6 +160,9 @@ spring:
             allowed-headers: ${CORS_ALLOWED_HEADERS}
             allow-credentials: ${CORS_ALLOW_CREDENTIALS}
             max-age: 7200
+
+jwt:
+  secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
 
 server:
   ssl:
@@ -159,6 +190,9 @@ spring:
   config:
     activate:
       on-profile: test
+
+jwt:
+  secret: ${JWT_SECRET:404E635266556j586E3272357538782F413F4428472B4B6250645367566B5970}
 
 eureka:
   client:

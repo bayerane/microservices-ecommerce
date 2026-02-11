@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE # Ajout du mode compatibilité
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    show-sql: true # Utile pour voir la création des tables en cas de souci
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  sql:
+    init:
+      mode: always # S'assure que data.sql est bien lu
+
+eureka:
+  client:
+    enabled: false
+
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration: 3600000
+
+logging:
+  level:
+    root: INFO
+    com.microservices.user: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

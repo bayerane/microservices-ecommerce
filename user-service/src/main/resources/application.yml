@@ -46,7 +46,7 @@ spring:
 
 eureka:
   client:
-    enabled: ${EUREKA_CLIENT_ENABLED:false}
+    enabled: ${EUREKA_CLIENT_ENABLED:true}
     service-url:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
     register-with-eureka: ${EUREKA_CLIENT_REGISTER_WITH_EUREKA:true}
@@ -60,13 +60,15 @@ eureka:
 feign:
   circuitbreaker:
     enabled: true
+    alphanumeric-ids:
+      enabled: true
   client:
     config:
       default:
         connectTimeout: ${FEIGN_CONNECT_TIMEOUT:5000}
         readTimeout: ${FEIGN_READ_TIMEOUT:10000}
         writeTimeout: ${FEIGN_WRITE_TIMEOUT:10000}
-        loggerLevel: BASIC
+        loggerLevel: full
 
 resilience4j:
   circuitbreaker:
@@ -77,6 +79,7 @@ resilience4j:
         slow-call-rate-threshold: ${RESILIENCE4J_SLOW_CALL_RATE_THRESHOLD:100}
         slow-call-duration-threshold: ${RESILIENCE4J_SLOW_CALL_DURATION_THRESHOLD:2000}
         wait-duration-in-open-state: ${RESILIENCE4J_WAIT_DURATION_IN_OPEN_STATE:60000}
+        automatic-transition-from-open-to-half-open-enabled: true
   retry:
     instances:
       auth-service:
@@ -88,23 +91,35 @@ resilience4j:
         register-health-indicator: true
         limit-refresh-period: 1m
         limit-for-period: 100
+        timeout-duration: 3s
 
 springdoc:
   api-docs:
     path: /api-docs
+    enabled: true
   swagger-ui:
     path: /swagger-ui.html
     enabled: ${SWAGGER_UI_ENABLED:true}
+    tags-sorter: alpha
+    operations-sorter: method
+  show-actuator: true
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus,circuitbreakers
+        include: health,info,metrics,env,prometheus,circuitbreakers
       base-path: /actuator
   endpoint:
     health:
       show-details: when-authorized
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: true
+    circuitbreakers:
+      enabled: true
   prometheus:
     metrics:
       export:
@@ -183,10 +198,10 @@ spring:
       on-profile: test
 
   datasource:
-    url: jdbc:h2:mem:userdb
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
     driver-class-name: org.h2.Driver
     username: sa
-    password: sa
+    password:
 
   jpa:
     show-sql: true

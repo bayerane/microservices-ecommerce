@@ -5,6 +5,8 @@ server:
     include-message: never
     include-stacktrace: never
     include-binding-errors: never
+  ssl:
+    enabled: ${SERVER_SSL_ENABLED:false}
 
 spring:
   application:

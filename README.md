@@ -313,16 +313,14 @@ microservices-backend/
 │       │   │       └── GlobalExceptionHandler.java
 │       │   └── resources/
 │       │       ├── application.yml
-│       │       ├── application-dev.yml
-│       │       ├── application-prod.yml
 │       │       └── data.sql
 │       └── test/
 │           └── java/com/microservices/discovery/
-│               └── AuthServiceApplicationTests.java
-│                   ├── controller/
-│                   │   └── AuthControllerTest.java
-│                   └── service/
-│                       └── AuthServiceTest.java
+│               ├── AuthServiceApplicationTests.java
+│               ├── controller/
+│               │   └── AuthControllerTest.java
+│               └── service/
+│                   └── AuthServiceTest.java
 │
 ├── 👤 user-service/                  # Service de gestion des utilisateurs
 │   ├── pom.xml
@@ -347,6 +345,8 @@ microservices-backend/
 │       │   │   │   └── PasswordUpdateRequest.java
 │       │   │   ├── mapper/
 │       │   │   │   └── UserMapper.java
+│       │   │   ├── client/
+│       │   │   │   └── AuthServiceClient.java
 │       │   │   ├── security/
 │       │   │   │   ├── SecurityConfig.java
 │       │   │   │   └── SecurityContextUtil.java
@@ -359,6 +359,12 @@ microservices-backend/
 │       │       ├── application.yml
 │       │       └── data.sql
 │       └── test/
+│           └── java/com/microservices/user/
+│               ├── UserServiceApplicationTests.java
+│               ├── controller/
+│               │   └── UserControllerTest.java
+│               └── service/
+│                   └── UserServiceTest.java
 │
 └── 📦 order-service/                 # Service de gestion des commandes
     ├── pom.xml
@@ -1213,7 +1219,7 @@ TOKEN=$(echo $REGISTER_RESPONSE | jq -r '.token')
 echo "Token: $TOKEN"
 
 # 2. Obtenir le profil utilisateur
-curl -s -X GET http://localhost:8080/api/users/me \
+curl -s -X GET http://localhost:8080/api/users/profile \
   -H "Authorization: Bearer $TOKEN" | jq
 
 # 3. Créer une commande

@@ -403,6 +403,12 @@ microservices-backend/
         │       ├── application.yml
         │       └── data.sql
         └── test/
+            └── java/com/microservices/order/
+                ├── OrderServiceApplicationTests.java
+                ├── controller/
+                │   └── OrderControllerTest.java
+                └── service/
+                    └── OrderServiceTest.java
 ```
 
 ---
@@ -432,8 +438,8 @@ microservices-backend/
 ### 1. Cloner le Projet
 
 ```bash
-git clone https://github.com/votre-username/microservices-backend.git
-cd microservices-backend
+git clone https://github.com/bayerane/microservices-ecommerce.git
+cd microservices-ecommerce
 ```
 
 ### 2. Configuration PostgreSQL

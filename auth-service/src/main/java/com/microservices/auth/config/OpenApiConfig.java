@@ -37,6 +37,7 @@ public class OpenApiConfig {
         Contact contact = new Contact();
         contact.setEmail("diopalassane89@gmail.com");
         contact.setName("Baye Rane");
+        contact.setUrl("https://github.com/bayerane/microservices-ecommerce.git");
 
         License license = new License()
             .name("MIT License")
